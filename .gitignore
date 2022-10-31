@@ -26,6 +26,5 @@ Temporary Items
 .apdisk
 
 # Project specific
-__pychache__
-__pycache__/*
+__pycache__
 venv
