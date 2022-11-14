@@ -12,18 +12,11 @@ class QueryForm(FlaskForm):
 def index():
     form = QueryForm()
     if form.validate_on_submit():
-        queryElement: str = render_template("message.html", css_class="query", text=form.query.data)
-        response: str = f"Response: '{form.query.data}'"
+        query = form.query.data
+        queryElement: str = render_template("message.html", css_class="query", text=query)
+        
+        response: str = f"Response: '{query}'"
         responseElement: str = render_template("message.html", css_class="response", text=response)
-        print(form.query.data)
+        print(query)
         return queryElement + responseElement
     return render_template("index.html", form=form)
-
-@app.route("/response", methods=["POST"])
-def response():
-    query: str = request.form.get("query")
-    queryElement: str = render_template("message.html", css_class="query", text=query)
-    response: str = f"Response: '{query}'"
-    responseElement: str = render_template("message.html", css_class="response", text=response)
-    print(query)
-    return queryElement + responseElement

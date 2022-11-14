@@ -89,7 +89,6 @@
 
 			<div id="content"></div>
 
-			<!-- <form method="POST" action={{ url_for("response") }}> -->
 			<form method="POST" action="/">
 				{{ form.csrf_token }}
 				{{ form.query }}
@@ -97,13 +96,6 @@
 			</form>
 		</div>
 		<script>
-			function createFormData(obj) {
-				const formData=new FormData();
-				for(const [key,value] of Object.entries(obj)) {
-					formData.append(key,value);
-				}
-				return formData;
-			}
 			let form=document.querySelector("form");
 
 			form.addEventListener("submit",event => {
