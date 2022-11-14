@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Chat Bot</title>
+		<title>Chatbot</title>
 		<style>
 			* {
 				box-sizing: border-box;
@@ -77,34 +77,39 @@
 	<body>
 		<div class="container">
 			<div id="header">
-				<h1>Chat Bot</h1>
-				<h2>Ask any for help!</h2>
+				<h1>Chatbot</h1>
+				<h2>Ask for any help!</h2>
 				<hr>
 			</div>
 
-			<div id="content">
-
-			</div>
+			<div id="content"></div>
 
 			<form>
 				<input type="text" name="query">
 			</form>
 		</div>
 		<script>
+			function createFormData(obj) {
+				const formData=new FormData();
+				for(const [key,value] of Object.entries(obj)) {
+					formData.append(key,value);
+				}
+				return formData;
+			}
 			let form=document.querySelector("form");
 			form.addEventListener("submit",event => {
 				event.preventDefault();
 
-				let query=document.querySelector("input").value;
+				let queryText=document.querySelector("input").value;
 
 				let content=document.querySelector("#content");
 
-				let queryDiv=document.createElement("div");
-				queryDiv.classList.add("query");
-				queryDiv.append(document.createTextNode(query));
-				content.append(queryDiv);
-
-				fetch("/response",{method: "post",body: new FormData(form)})
+				fetch("/message",{method: "post",body: createFormData({css_class: "query",text: queryText})})
+					.then(data => data.text())
+					.then(messageHTML => {
+						content.innerHTML+=messageHTML;
+					})
+					.then(() => fetch("/response",{method: "post",body: new FormData(form)}))
 					.then(data => data.text())
 					.then(responseText => {
 						let responseDiv=document.createElement("div");
@@ -113,6 +118,21 @@
 						content.append(responseDiv);
 						responseDiv.scrollIntoView(true);
 					});
+
+				// let queryDiv=document.createElement("div");
+				// queryDiv.classList.add("query");
+				// queryDiv.append(document.createTextNode(queryText));
+				// content.append(queryDiv);
+
+				// fetch("/response",{method: "post",body: new FormData(form)})
+				// 	.then(data => data.text())
+				// 	.then(responseText => {
+				// 		let responseDiv=document.createElement("div");
+				// 		responseDiv.classList.add("response");
+				// 		responseDiv.append(document.createTextNode(responseText));
+				// 		content.append(responseDiv);
+				// 		responseDiv.scrollIntoView(true);
+				// 	});
 			});
 		</script>
 	</body>
