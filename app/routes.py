@@ -4,7 +4,7 @@ from wtforms import StringField, SubmitField
 from app import app
 
 class QueryForm(FlaskForm):
-    query = StringField()
+    query = StringField(render_kw={"placeholder": "Enter your message..."})
     submit = SubmitField("Send")
 
 @app.route("/", methods=["GET", "POST"])
@@ -17,6 +17,7 @@ def index():
         
         response: str = f"Response: '{query}'"
         responseElement: str = render_template("message.html", css_class="response", text=response)
+        
         print(query)
         return queryElement + responseElement
     return render_template("index.html", form=form)

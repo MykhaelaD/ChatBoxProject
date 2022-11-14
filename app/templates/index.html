@@ -1,90 +1,16 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Chatbot</title>
+		<title>Mount Chatbot</title>
 		<link rel="icon" href="data:,">
-		<style>
-			* {
-				box-sizing: border-box;
-			}
-
-			body {
-				min-height: 100vh;
-				display: flex;
-				flex-direction: column;
-				padding: 0;
-				margin: 0;
-				overflow: hidden;
-			}
-
-			.container {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				flex-flow: column wrap;
-				width: 100%;
-				height: 100vh;
-				padding: 1rem;
-				gap: 1rem;
-				background: lightgray;
-			}
-
-			#header {
-				width: 100%;
-				flex: 0;
-			}
-
-			#header hr {
-				margin: 0;
-			}
-
-			#content {
-				width: 100%;
-				flex: 1;
-				background: white;
-				overflow: scroll;
-			}
-
-			.query {
-				background: lightcyan;
-				padding: 1rem;
-				margin: 1rem;
-				margin-left: 60%;
-			}
-
-			.response {
-				background: lightpink;
-				padding: 1rem;
-				margin: 1rem;
-				margin-right: 60%;
-			}
-
-			form {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				background: yellow;
-				width: 100%;
-				flex: 0;
-			}
-
-			input {
-				padding: 0;
-				margin: 0;
-				width: 100%;
-			}
-
-			input[type=submit] {
-				width: 50px;
-			}
-		</style>
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		<script src="{{ url_for('static', filename='app.js') }}" defer></script>
 	</head>
 	<body>
 		<div class="container">
 			<div id="header">
-				<h1>Chatbot</h1>
-				<h2>Ask for any help!</h2>
-				<hr>
+				<h1>Mount Chatbot</h1>
+				<h2>Get help for anything related to Mount St. Mary's University</h2>
 			</div>
 
 			<div id="content"></div>
@@ -95,24 +21,5 @@
 				{{ form.submit }}
 			</form>
 		</div>
-		<script>
-			let form=document.querySelector("form");
-
-			form.addEventListener("submit",event => {
-				event.preventDefault();
-
-				let queryText=document.querySelector("input").value;
-				let content=document.querySelector("#content");
-
-				fetch(form.action,{method: "post",body: new URLSearchParams(new FormData(form))})
-					.then(data => data.text())
-					.then(messagesHTML => {
-						content.innerHTML+=messagesHTML;
-						form.reset();
-					});
-
-			});
-
-		</script>
 	</body>
 </html>

@@ -1,0 +1,108 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit;
+}
+
+:root {
+	--border: solid darkgray 0.1rem;
+}
+
+body {
+	display: flex;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
+	background: lightblue;
+	font-family: Helvetica, sans-serif;
+}
+
+.container {
+	
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: space-between;
+	width: 100%;
+	max-width: 867px;
+	margin: 2rem 1rem;
+	height: calc(100vh - 3rem);
+	background: lightgray;
+	box-shadow: 0 1rem 1rem -0.4rem rgba(0, 0, 0, 0.2);
+	border: var(--border);
+	border-radius: 0.5rem;
+}
+
+#header {
+	text-align: center;
+	padding: 1rem;
+	color: #444;
+	border-bottom: var(--border);
+}
+
+#header h2 {
+	font-weight: normal;
+}
+
+#content {
+	width: 100%;
+	flex: 1;
+	background: white;
+	overflow: scroll;
+}
+
+.message {
+	display: flex;
+}
+
+.message p {
+	padding: 1rem;
+	margin: 1rem;
+	max-width: 450px;
+}
+
+.query {
+	flex-direction: row-reverse;
+}
+
+.query p {
+	background: #3333EE;
+	color: white;
+	border-radius: 1rem 1rem 0 1rem;
+}
+
+.response {
+	flex-direction: row;
+}
+
+.response p {
+	background: #CCC;	
+	color: black;
+	border-radius: 1rem 1rem 1rem 0;}
+
+form {
+	display: inline-flex;
+	padding: 1rem;
+	gap: 1rem;
+	border-top: var(--border);
+}
+
+input {
+	padding: 0.5rem;
+	border: var(--border);
+	border-radius: 0.2rem;
+	font-size: 1rem;
+}
+
+input[type=text] {
+	width: 100%;
+}
+
+input[type=submit] {
+	background: #00CF00;
+	color: white;
+	font-weight: bold;
+	border-color: #00AA00;
+}
