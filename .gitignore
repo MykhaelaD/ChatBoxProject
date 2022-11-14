@@ -28,3 +28,4 @@ Temporary Items
 # Project specific
 __pycache__
 venv
+.vscode

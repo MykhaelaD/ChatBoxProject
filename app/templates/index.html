@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>Chatbot</title>
+		<link rel="icon" href="data:,">
 		<style>
 			* {
 				box-sizing: border-box;
@@ -72,6 +73,10 @@
 				margin: 0;
 				width: 100%;
 			}
+
+			input[type=submit] {
+				width: 50px;
+			}
 		</style>
 	</head>
 	<body>
@@ -84,8 +89,11 @@
 
 			<div id="content"></div>
 
-			<form>
-				<input type="text" name="query">
+			<!-- <form method="POST" action={{ url_for("response") }}> -->
+			<form method="POST" action="/">
+				{{ form.csrf_token }}
+				{{ form.query }}
+				{{ form.submit }}
 			</form>
 		</div>
 		<script>
@@ -97,43 +105,22 @@
 				return formData;
 			}
 			let form=document.querySelector("form");
+
 			form.addEventListener("submit",event => {
 				event.preventDefault();
 
 				let queryText=document.querySelector("input").value;
-
 				let content=document.querySelector("#content");
 
-				fetch("/message",{method: "post",body: createFormData({css_class: "query",text: queryText})})
+				fetch(form.action,{method: "post",body: new URLSearchParams(new FormData(form))})
 					.then(data => data.text())
-					.then(messageHTML => {
-						content.innerHTML+=messageHTML;
-					})
-					.then(() => fetch("/response",{method: "post",body: new FormData(form)}))
-					.then(data => data.text())
-					.then(responseText => {
-						let responseDiv=document.createElement("div");
-						responseDiv.classList.add("response");
-						responseDiv.append(document.createTextNode(responseText));
-						content.append(responseDiv);
-						responseDiv.scrollIntoView(true);
+					.then(messagesHTML => {
+						content.innerHTML+=messagesHTML;
+						form.reset();
 					});
 
-				// let queryDiv=document.createElement("div");
-				// queryDiv.classList.add("query");
-				// queryDiv.append(document.createTextNode(queryText));
-				// content.append(queryDiv);
-
-				// fetch("/response",{method: "post",body: new FormData(form)})
-				// 	.then(data => data.text())
-				// 	.then(responseText => {
-				// 		let responseDiv=document.createElement("div");
-				// 		responseDiv.classList.add("response");
-				// 		responseDiv.append(document.createTextNode(responseText));
-				// 		content.append(responseDiv);
-				// 		responseDiv.scrollIntoView(true);
-				// 	});
 			});
+
 		</script>
 	</body>
 </html>
